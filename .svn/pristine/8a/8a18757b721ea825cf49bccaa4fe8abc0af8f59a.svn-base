@@ -1,0 +1,81 @@
+package com.mfu.service;
+
+import java.util.List;
+
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import com.mfu.ejb.Employee;
+
+@Stateless
+@Remote(EmployeeService.class)
+public class EmployeeServiceImplement implements EmployeeService {
+
+	@PersistenceContext(unitName = "Database")
+	EntityManager em;
+
+	@Override
+	public void add(Employee emp) {
+		// TODO Auto-generated method stub
+		em.persist(emp);
+	}
+
+	@Override
+	public void edit(Employee emp) {
+		// TODO Auto-generated method stub
+		em.merge(emp);
+	}
+
+	@Override
+	public void delete(long emp_id) {
+		// TODO Auto-generated method stub
+		Employee emp = em.find(Employee.class, emp_id);
+		if (emp != null) {
+			em.remove(emp);
+		}
+	}
+
+	@Override
+	public void disable(long id) {
+		Employee emp = em.find(Employee.class, id);
+		if (emp != null) {
+			emp.setEmployee_status("Inactive");
+			em.persist(emp);
+			System.out.println("Employee status successfully changed to 'Inactive'");
+		} else {
+			System.out.println("Employee status unsuccessfully changed to 'Inactive'");
+		}
+	}
+
+	@Override
+	public Employee findEmployeeById(long emp_id) {
+		// TODO Auto-generated method stub
+		return em.find(Employee.class, emp_id);
+	}
+
+	@Override
+	public List<Employee> listEmployee() {
+		// TODO Auto-generated method stub
+		List<Employee> empList = em.createQuery("SELECT emp FROM Employee emp").getResultList();
+		return empList;
+	}
+
+	@Override
+	public List<Employee> listEmployeeByDepartment(long dep_id) {
+		List<Employee> empList = em
+				.createQuery(
+						"SELECT emp FROM Employee emp WHERE emp.employee_department_id.department_id=:department_id")
+				.setParameter("department_id", dep_id).getResultList();
+		return empList;
+	}
+
+	@Override
+	public List<Employee> listEmployeeByPosition(long pos_id) {
+		List<Employee> empList = em
+				.createQuery("SELECT emp FROM Employee emp WHERE emp.employee_position_id.position_id=:position_id")
+				.setParameter("position_id", pos_id).getResultList();
+		return empList;
+	}
+}
