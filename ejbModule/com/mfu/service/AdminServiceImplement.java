@@ -55,8 +55,8 @@ public class AdminServiceImplement implements AdminService {
 	@Override
 	public Admin findAdminByToken(String token) {
 		Admin adm = new Admin();
-		List<Admin> admList = em.createQuery("SELECT adm FROM Admin adm WHERE adm.admin_token=:token")
-				.setParameter("token", token).getResultList();
+		List<Admin> admList = em.createQuery("SELECT adm FROM Admin adm WHERE adm.admin_token=:admin_token")
+				.setParameter("admin_token", token).getResultList();
 
 		if (admList.get(0) != null) {
 			adm = admList.get(0);
