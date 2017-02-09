@@ -12,4 +12,6 @@ public interface AdminService {
 	public Admin findAdminById(long id);
 
 	public Admin findAdminByUsername(String uname);
+
+	public Admin findAdminByToken(String token);
 }
