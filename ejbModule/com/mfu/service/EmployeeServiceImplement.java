@@ -8,6 +8,7 @@ import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.Part;
 
 import com.mfu.ejb.Employee;
 
@@ -109,6 +110,19 @@ public class EmployeeServiceImplement implements EmployeeService {
 				.createQuery("SELECT emp FROM Employee emp WHERE emp.employee_position_id.position_id=:position_id")
 				.setParameter("position_id", pos_id).getResultList();
 		return empList;
+	}
+
+	@Override
+	public void importEmployeeData(String fileName, Part filePath) {
+		char quotetation = '"';
+		String query = "LOAD DATA INFILE 'C:/Users/Peth/Desktop/emp.csv' INTO TABLE Employee FIELDS TERMINATED BY ','ENCLOSED BY '"
+				+ quotetation + "' LINES TERMINATED BY '\r\n'IGNORE 1 LINES";
+		try {
+			em.createQuery(query);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 
 }

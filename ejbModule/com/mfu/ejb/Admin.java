@@ -15,6 +15,7 @@ public class Admin implements Serializable {
 
 	private String admin_username;
 	private String admin_password;
+	private String admin_email;
 
 	public long getAdmin_id() {
 		return admin_id;
@@ -38,6 +39,14 @@ public class Admin implements Serializable {
 
 	public void setAdmin_password(String admin_password) {
 		this.admin_password = admin_password;
+	}
+
+	public String getAdmin_email() {
+		return admin_email;
+	}
+
+	public void setAdmin_email(String admin_email) {
+		this.admin_email = admin_email;
 	}
 
 }

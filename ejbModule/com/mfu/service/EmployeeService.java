@@ -2,6 +2,8 @@ package com.mfu.service;
 
 import java.util.List;
 
+import javax.servlet.http.Part;
+
 import com.mfu.ejb.Employee;
 
 public interface EmployeeService {
@@ -25,5 +27,7 @@ public interface EmployeeService {
 	public List<Employee> listEmployeeByPosition(long id);
 
 	public Employee findEmployeeByUsername(String uname);
+
+	public void importEmployeeData(String fileName, Part filePath);
 
 }
